@@ -14,9 +14,14 @@ for ff in font_files:
 matplotlib.rc('font', family="Malgun Gothic")
 matplotlib.rcParams['axes.unicode_minus'] = False
 
+# 데이터 경로
 DATA_PATH = "C:/practice/finalproject/data/"
 DATA_PATH
 
+# 시드값
+SEED = 42
+
+# 데이터불러오기
 import pandas as pd
 import numpy as np
 
@@ -29,12 +34,15 @@ train_tr.shape , train_target.shape , test_tr.shape , submit.shape
 
 submit = pd.read_csv(f"{DATA_PATH}store_submission.csv") # 제출 양식 데이터
 
+
+#피처
 train_ft = pd.read_csv(f"{DATA_PATH}train_common_1114.csv") # 학습 데이터(피처)
 test_ft = pd.read_csv(f"{DATA_PATH}test_common_1114.csv") # 테스트 데이터(피처)
 
 train_ft.shape , test_ft.shape
 
 
+# 결측치 처리
 mask = train_ft.isnull().sum() > 0
 train_ft.isnull().sum()[mask]
 
@@ -316,6 +324,12 @@ train_ft.head()
 
 
 
+
+
+
+
+# 앙상블
+
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
@@ -349,6 +363,8 @@ parmas = {
 }
 
 model = VotingClassifier(**parmas)
+
+
 
 
 
