@@ -1,0 +1,83 @@
+1. 원본데이터 + 기본모델
+LGBMClassifier : 0.7207
+RandomForestClassifier : 0.6962
+HistGradientBoostingClassifier : 0.7166
+AdaBoostClassifier : 0.7058
+SVC : 0.7161
+MLPClassifier : 0.6760
+XGBClassifier : 0.7056
+CatBoostClassifier : 0.7224
+
+하이퍼파라미터 튜닝
+LGBM(0.7295), CatBoost(0.7297), XGB(0.727) 선택
+HGB(0.718), RF(0.7) -> 파라미터 튜닝 해도 성능 상승 X
+MLP -> 기본 모델 성능이 낮고, 다른 모델의 성능이 충분히 나온다고 판단. 시간적 여유가 있으면 튜닝 해볼듯
+SVC(X), AdaBoost(0.715) -> 튜닝 시간 너무 오래걸림
+
+LGBM, CatBoost 앙상블 -> 0.7271
+LGBM, CatBoost, XGB 앙상블 -> 0.7272
+
+-> CatBoost 모델만 사용
+
+2. RFECV 데이터 + 기본모델
+SGDClassifier : 0.6984
+LogisticRegression : 0.7288
+LinearSVC : 0.7271
+LGBMClassifier : 0.7189
+XGBClassifier : 0.7074
+CatBoostClassifier : 0.7225
+
+하이퍼파라미터 튜닝
+1) 선형모델
+LR(0.7292) LSVC(0.7280) SGD(0.7284)
+
+2) 비선형모델
+LGBM(0.7291), CatBoost(0.7282), HGB(0.7167)
+
+LR, LSVC, SGD 앙상블(0.7279, 0.70, 0.63)
+LR, LSVC, SGD, LGBM, CatBoost 앙상블(0.7354, 0.70, 0.64)
+
+-> LR, LSVC, SGD, LGBM, CatBoost 스태킹 모델 사용
+
+3. SFM 데이터 + 기본모델
+SGDClassifier : 0.6962
+LogisticRegression : 0.7215
+LinearSVC : 0.7203
+LGBMClassifier : 0.7216
+XGBClassifier : 0.7071
+CatBoostClassifier : 0.7240
+
+하이퍼파라미터 튜닝
+LR(0.7240), LSVC(0.7230), SGD(0.7250), LGBM(0.7293), CatBoost(0.7306)
+
+앙상블
+LR, LSVC, SGD, LGBM, CatBoost 앙상블(0.7304, 0.80, 0.67)
+LR, LGBM, CatBoost(0.7309, 0.79, 0.67)
+LR, SGD, LGBM, CatBoost 앙상블(0.7305, 0.8, 0.67)
+SGD, LGBM, CatBoost 앙상블(0.7311, 0.8, 0.66)
+
+-> LR, SGD, LGBM, CatBoost 스태킹 모델 사용
+
+4. (SFM + LDA) 데이터 + 기본모델
+SGDClassifier : 0.7259
+LogisticRegression : 0.7266
+LinearSVC : 0.7267
+LGBMClassifier : 0.7263
+XGBClassifier : 0.7284
+CatBoostClassifier : 0.7273
+RandomForestClassifier : 0.6315
+MLPClassifier : 0.7273
+SVC : 0.7272
+
+하이퍼파라미터 튜닝
+LR(0.7294), LSVC(0.7296), SGD(0.7321), LGBM(0.7310), CatBoost(0.7326), RF(0.7327), MLP(0.7300), SVC(0.7296)
+
+앙상블
+RF, Cat, SGD, LGBM (0.7266, 0.70, 0.61)
+RF, Cat, LGBM (0..7296, 0.67, 0.66)
+
+-> RF, CatBoost, LGBM 스태킹 모델 사용
+
+
+5. 전체 앙상블
+각 스태킹 모델로 얻은 예측확률의 평균
